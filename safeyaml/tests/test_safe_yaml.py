@@ -14,9 +14,7 @@ class TestSafeYaml(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.example_file = os.path.expanduser('~/safeyaml/safeyaml/tests/example.yaml')
-
-    def test_can_construct_object_with_correct_spec(self):
-        spec = {
+        cls.correct_spec = {
             'one': {'type': str, 'length': {'min': 2, 'max': 3}, 'pattern': re.compile(r'[a-z]')},
             'two': {'type': int},
             'three': {'type': bool},
@@ -26,7 +24,9 @@ class TestSafeYaml(unittest.TestCase):
             'seven': {'type': Url},
             'eight': {'type': HostName},
         }
-        config = SafeYaml(self.example_file, spec)
+
+    def test_can_construct_object_with_correct_spec(self):
+        config = SafeYaml(self.example_file, self.correct_spec)
         self.assertTrue(isinstance(config, SafeYaml))
 
 
