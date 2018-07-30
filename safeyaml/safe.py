@@ -35,6 +35,10 @@ class InvalidHostNameError(Exception):
     message = 'Invalid host name'
 
 
+class MissingKeyError(Exception):
+    message = 'Your config specification is missing a key'
+
+
 class SafeYaml(dict):
 
     """Safely construct a dictionary from a YAML file."""
@@ -43,11 +47,22 @@ class SafeYaml(dict):
         self.spec = specification
         with open(filename, 'r') as f:
             config = yaml.safe_load(f)
+        self.check_keys(config, specification)
         for k,v in config.iteritems():
             self.check_type(k, v)
             self.check_length(k, v)
             self.check_pattern(k, v)
             self.__setitem__(str(k), v)
+
+    def check_keys(self, config, spec):
+        config_keys = config.keys()
+        spec_keys = spec.keys()
+        for k in config_keys:
+            if k in spec_keys:
+                pass
+            else:
+                raise MissingKeyError
+        return
 
     def check_type(self, key, val):
         _type = self.spec[key]['type']
