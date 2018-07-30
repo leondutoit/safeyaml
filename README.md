@@ -29,7 +29,7 @@ eight: 'my-host.name.domain01
 You can then use `safeyaml` to safely construct a config dictionary as such:
 
 ```python
-from safeyaml import SafeYaml
+from safeyaml import SafeYaml, Path, Url, HostName
 
 config_specification = {
     'one': {'type': str, 'length': {'min': 2, 'max': 3},
