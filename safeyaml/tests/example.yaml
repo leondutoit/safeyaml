@@ -7,3 +7,6 @@ four:
 five:
 - l1
 - l2
+six: '/tmp'
+seven: 'https://e.com'
+eight: 'my-host.name.domain01'

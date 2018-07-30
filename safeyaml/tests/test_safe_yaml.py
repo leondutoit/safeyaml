@@ -4,7 +4,9 @@ import re
 import unittest
 
 from ..safe import SafeYaml, IncorrectTypeError, IncorrectLengthError, \
-                   IncorrectPatternError, IncorrectSpecificationError
+                   IncorrectPatternError, IncorrectSpecificationError, \
+                   Path, Url, HostName, InvalidPathError, InvalidUrlError, \
+                   InvalidHostNameError
 
 
 class TestSafeYaml(unittest.TestCase):
@@ -20,18 +22,19 @@ class TestSafeYaml(unittest.TestCase):
             'three': {'type': bool},
             'four': {'type': dict},
             'five': {'type': list},
+            'six': {'type': Path},
+            'seven': {'type': Url},
+            'eight': {'type': HostName},
         }
         config = SafeYaml(self.example_file, spec)
         self.assertTrue(isinstance(config, SafeYaml))
-
 
 
 def main():
     runner = unittest.TextTestRunner()
     suite = []
     suite.append(unittest.TestSuite(map(TestSafeYaml, [
-        'test_can_construct_object_with_correct_spec',
-        ])))
+                 'test_can_construct_object_with_correct_spec',])))
     map(runner.run, suite)
 
 
