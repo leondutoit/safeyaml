@@ -29,12 +29,22 @@ class TestSafeYaml(unittest.TestCase):
         config = SafeYaml(self.example_file, self.correct_spec)
         self.assertTrue(isinstance(config, SafeYaml))
 
+    def test_str_restrictions_work(self):
+        incorrect_spec = self.correct_spec
+        incorrect_spec['one'] = {'type': str, 'length': {'min': 4, 'max': 5}}
+        self.assertRaises(IncorrectLengthError, SafeYaml, self.example_file, incorrect_spec)
+        incorrect_spec['one'] = {'type': str, 'length': {'min': 600, 'max': 5}}
+        self.assertRaises(IncorrectSpecificationError, SafeYaml, self.example_file, incorrect_spec)
+        incorrect_spec['one'] = {'type': str, 'pattern': re.compile(r'[A-Z]')}
+        self.assertRaises(IncorrectPatternError, SafeYaml, self.example_file, incorrect_spec)
+
 
 def main():
     runner = unittest.TextTestRunner()
     suite = []
     suite.append(unittest.TestSuite(map(TestSafeYaml, [
-                 'test_can_construct_object_with_correct_spec',])))
+                 'test_can_construct_object_with_correct_spec',
+                 'test_str_restrictions_work'])))
     map(runner.run, suite)
 
 
