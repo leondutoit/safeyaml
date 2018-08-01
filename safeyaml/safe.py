@@ -20,7 +20,7 @@ class IncorrectPatternError(Exception):
 
 
 class IncorrectSpecificationError(Exception):
-    message = 'There is an issue with your configuration specification'
+    pass
 
 
 class InvalidPathError(Exception):
@@ -84,7 +84,8 @@ class SafeYaml(dict):
         except KeyError:
             return
         if _min > _max:
-            raise IncorrectSpecificationError
+            message = 'For key: %s, your spec has configured min > max' % key
+            raise IncorrectSpecificationError(message)
         length = len(val)
         if length < _min or length > _max:
             message = 'Value for key: %s, has length %d, requirements are - min: %d, max: %d' % (key, length, _min, _max)
