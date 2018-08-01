@@ -12,7 +12,7 @@ class IncorrectTypeError(Exception):
 
 
 class IncorrectLengthError(Exception):
-    message = 'The value does not meet the length requirements'
+    pass
 
 
 class IncorrectPatternError(Exception):
@@ -73,8 +73,8 @@ class SafeYaml(dict):
         if isinstance(val, _type):
             return
         else:
-            m = 'Value', str(val), 'for key', str(key), 'does not match type in the spec', str(_type)
-            raise IncorrectTypeError(m)
+            message = 'Value: %s, for key: %s, does not match type in spec: %s' % (str(val), str(key), str(_type))
+            raise IncorrectTypeError(message)
 
     def check_length(self, key, val):
         try:
@@ -86,7 +86,8 @@ class SafeYaml(dict):
             raise IncorrectSpecificationError
         length = len(val)
         if length < _min or length > _max:
-            raise IncorrectLengthError
+            message = 'Value for key: %s, has length %d, requirements are - min: %d, max: %d' % (key, length, _min, _max)
+            raise IncorrectLengthError(message)
         else:
             return
 

@@ -15,7 +15,7 @@ class TestSafeYaml(unittest.TestCase):
     def setUpClass(cls):
         cls.example_file = os.path.expanduser('~/safeyaml/safeyaml/tests/example.yaml')
         cls.correct_spec = {
-            'one': {'type': str, 'length': {'min': 2, 'max': 3}, 'pattern': re.compile(r'[a-z]')},
+            'one': {'type': str, 'length': {'min': 4, 'max': 6}, 'pattern': re.compile(r'[a-z]')},
             'two': {'type': int},
             'three': {'type': bool},
             'four': {'type': dict},
