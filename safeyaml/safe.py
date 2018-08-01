@@ -16,7 +16,7 @@ class IncorrectLengthError(Exception):
 
 
 class IncorrectPatternError(Exception):
-    message = 'The value does not conform to the correct pattern'
+    pass
 
 
 class IncorrectSpecificationError(Exception):
@@ -99,7 +99,8 @@ class SafeYaml(dict):
         if pattern.match(val):
             return
         else:
-            raise IncorrectPatternError
+            message = 'The value: %s, does not conform to the correct pattern' % val
+            raise IncorrectPatternError(message)
 
 
 class CustomType(object):
