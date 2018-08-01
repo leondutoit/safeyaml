@@ -8,7 +8,7 @@ from url import IS_VALID_URL
 
 
 class IncorrectTypeError(Exception):
-    message = 'The value does not match the type in the specification'
+    pass
 
 
 class IncorrectLengthError(Exception):
@@ -73,7 +73,8 @@ class SafeYaml(dict):
         if isinstance(val, _type):
             return
         else:
-            raise IncorrectTypeError
+            m = 'Value', str(val), 'for key', str(key), 'does not match type in the spec', str(_type)
+            raise IncorrectTypeError(m)
 
     def check_length(self, key, val):
         try:
