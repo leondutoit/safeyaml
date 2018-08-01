@@ -36,7 +36,7 @@ class InvalidHostNameError(Exception):
 
 
 class MissingKeyError(Exception):
-    message = 'Your config specification is missing a key'
+    pass
 
 
 class SafeYaml(dict):
@@ -61,7 +61,8 @@ class SafeYaml(dict):
             if k in spec_keys:
                 pass
             else:
-                raise MissingKeyError
+                message = 'Your config specification is missing a key: %s' % str(k)
+                raise MissingKeyError(message)
         return
 
     def check_type(self, key, val):
