@@ -24,15 +24,15 @@ class IncorrectSpecificationError(Exception):
 
 
 class InvalidPathError(Exception):
-    message = 'The path does not exist'
+    pass
 
 
 class InvalidUrlError(Exception):
-    message = 'Invalid URL'
+    pass
 
 
 class InvalidHostNameError(Exception):
-    message = 'Invalid host name'
+    pass
 
 
 class MissingKeyError(Exception):
@@ -117,7 +117,8 @@ class Path(CustomType):
         if os.path.lexists(name):
             return name
         else:
-            raise InvalidPathError
+            message = 'The path %s does not exist' % name
+            raise InvalidPathError(message)
 
 
 class Url(CustomType):
@@ -131,7 +132,8 @@ class Url(CustomType):
         if IS_VALID_URL.match(name):
             return name
         else:
-            raise InvalidUrlError
+            message = 'Invalid URL: %s' % name
+            raise InvalidUrlError(message)
 
 
 class HostName(CustomType):
@@ -157,4 +159,5 @@ class HostName(CustomType):
         if self.is_valid_hostname(name):
             return name
         else:
-            raise InvalidHostNameError
+            message = 'Invalid host name: %s' % name
+            raise InvalidHostNameError(message)
